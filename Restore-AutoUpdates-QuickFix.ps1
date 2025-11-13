@@ -129,8 +129,18 @@ Write-Host "`n--- Other Common Apps ---" -ForegroundColor Cyan
 # VLC
 Enable-UpdateTasks -TaskPath "\VideoLAN\*"
 
-# 7-Zip, WinRAR, etc.
-Enable-UpdateTasks -TaskPath "\*"  | Where-Object { $_.TaskName -like "*update*" }
+# Enable other update-related tasks
+Write-Host "Enabling other update-related scheduled tasks..." -ForegroundColor Yellow
+$allTasks = Get-ScheduledTask -ErrorAction SilentlyContinue | Where-Object { $_.TaskName -like "*update*" -and $_.State -eq 'Disabled' }
+foreach ($task in $allTasks) {
+    try {
+        Enable-ScheduledTask -TaskName $task.TaskName -TaskPath $task.TaskPath -ErrorAction Stop
+        Write-Host "  ✓ Enabled: $($task.TaskName)" -ForegroundColor Green
+    }
+    catch {
+        Write-Host "  ! Failed to enable: $($task.TaskName)" -ForegroundColor Red
+    }
+}
 
 Write-Host "`n=== Restoration Complete ===" -ForegroundColor Green
 Write-Host "Recommended: Restart the computer to ensure all changes take effect." -ForegroundColor Yellow
