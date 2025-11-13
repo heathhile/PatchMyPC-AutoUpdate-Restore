@@ -5,8 +5,10 @@ This folder contains scripts and documentation for restoring automatic updates a
 ## Files
 
 - `Restore-AutoUpdates-QuickFix.ps1` - Quick fix for urgent machines
-- `Detect-AutoUpdateStatus.ps1` - Detection script for Intune remediation
-- `Remediate-AutoUpdates.ps1` - Remediation script for Intune deployment
+- `Restore-AutoUpdates-PlatformScript.ps1` - Combined script for Intune Platform Scripts deployment
+- `Detect-AutoUpdateStatus.ps1` - Detection script for Intune Remediations
+- `Remediate-AutoUpdates.ps1` - Remediation script for Intune Remediations
+- `PLATFORM-SCRIPTS-DEPLOYMENT.md` - Guide for deploying via Intune Platform Scripts
 - `Intune-Configuration-Cleanup.md` - Guide for removing PatchMyPC Intune configurations
 
 ## Quick Fix (Urgent Machines)
@@ -24,10 +26,20 @@ This folder contains scripts and documentation for restoring automatic updates a
 - Re-enables scheduled update tasks
 - Removes Group Policy registry settings
 
-## Planned Rollout (Intune Remediation)
+## Planned Rollout (Intune)
 
-### Setup
-1. Go to Intune > Devices > Remediations > Create script package
+### Option A: Platform Scripts (Most Common)
+Use if you have access to **Devices > Scripts** but not **Remediations**.
+
+1. See detailed guide: `PLATFORM-SCRIPTS-DEPLOYMENT.md`
+2. Upload `Restore-AutoUpdates-PlatformScript.ps1` to Intune
+3. Assign to device groups
+4. Monitor deployment in Intune portal
+
+### Option B: Remediations (Advanced Monitoring)
+Use if you have access to **Devices > Remediations**.
+
+1. See detailed guide: `QUICK-START.md`
 2. Upload `Detect-AutoUpdateStatus.ps1` as detection script
 3. Upload `Remediate-AutoUpdates.ps1` as remediation script
 4. Configure schedule (daily recommended during transition)

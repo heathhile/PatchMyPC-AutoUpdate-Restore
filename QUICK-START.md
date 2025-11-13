@@ -21,6 +21,9 @@
 
 ## For Intune Deployment (Planned Rollout)
 
+> **Note**: If you don't have access to "Remediations" in Intune, use the **Platform Scripts** option instead.
+> See `PLATFORM-SCRIPTS-DEPLOYMENT.md` for detailed instructions on deploying via **Devices > Scripts**.
+
 ### Prerequisites
 
 **Licensing Requirements:**
