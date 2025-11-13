@@ -21,6 +21,18 @@
 
 ## For Intune Deployment (Planned Rollout)
 
+### Prerequisites
+
+**Licensing Requirements:**
+Intune Remediations (Proactive Remediations) is included with:
+- Microsoft 365 Business Premium [OK]
+- Microsoft 365 E3 or E5
+- Microsoft 365 F3 with Intune Plan 1 add-on
+- Enterprise Mobility + Security E3 or E5
+
+**Permissions Required:**
+- Intune Administrator or Global Administrator role
+
 ### Step 1: Create Remediation Package
 
 1. Log into **Intune admin center** (https://intune.microsoft.com)
