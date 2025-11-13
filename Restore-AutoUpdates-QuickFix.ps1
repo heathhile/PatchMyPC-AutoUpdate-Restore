@@ -13,11 +13,11 @@ function Enable-UpdateService {
             Write-Host "Enabling $DisplayName..." -ForegroundColor Yellow
             Set-Service -Name $ServiceName -StartupType Automatic -ErrorAction Stop
             Start-Service -Name $ServiceName -ErrorAction SilentlyContinue
-            Write-Host "  ✓ $DisplayName enabled and started" -ForegroundColor Green
+            Write-Host "  [OK] $DisplayName enabled and started" -ForegroundColor Green
         }
     }
     catch {
-        Write-Host "  ! Could not configure $DisplayName : $_" -ForegroundColor Red
+        Write-Host "  [!] Could not configure $DisplayName : $_" -ForegroundColor Red
     }
 }
 
@@ -32,10 +32,10 @@ function Enable-UpdateTasks {
         if ($task.State -eq 'Disabled') {
             try {
                 Enable-ScheduledTask -TaskName $task.TaskName -TaskPath $task.TaskPath -ErrorAction Stop
-                Write-Host "  ✓ Enabled: $($task.TaskName)" -ForegroundColor Green
+                Write-Host "  [OK] Enabled: $($task.TaskName)" -ForegroundColor Green
             }
             catch {
-                Write-Host "  ! Failed to enable: $($task.TaskName)" -ForegroundColor Red
+                Write-Host "  [!] Failed to enable: $($task.TaskName)" -ForegroundColor Red
             }
         }
     }
@@ -50,11 +50,11 @@ function Remove-RegistryBlock {
             $value = Get-ItemProperty -Path $Path -Name $Name -ErrorAction SilentlyContinue
             if ($null -ne $value) {
                 Remove-ItemProperty -Path $Path -Name $Name -Force -ErrorAction Stop
-                Write-Host "  ✓ Removed update block for $AppName" -ForegroundColor Green
+                Write-Host "  [OK] Removed update block for $AppName" -ForegroundColor Green
             }
         }
         catch {
-            Write-Host "  ! Could not remove registry block for $AppName" -ForegroundColor Red
+            Write-Host "  [!] Could not remove registry block for $AppName" -ForegroundColor Red
         }
     }
 }
@@ -71,7 +71,7 @@ foreach ($path in $chromePolicyPaths) {
     if (Test-Path $path) {
         Write-Host "Removing Chrome policy blocks..." -ForegroundColor Yellow
         Remove-Item -Path $path -Recurse -Force -ErrorAction SilentlyContinue
-        Write-Host "  ✓ Removed policies at $path" -ForegroundColor Green
+        Write-Host "  [OK] Removed policies at $path" -ForegroundColor Green
     }
 }
 
@@ -135,10 +135,10 @@ $allTasks = Get-ScheduledTask -ErrorAction SilentlyContinue | Where-Object { $_.
 foreach ($task in $allTasks) {
     try {
         Enable-ScheduledTask -TaskName $task.TaskName -TaskPath $task.TaskPath -ErrorAction Stop
-        Write-Host "  ✓ Enabled: $($task.TaskName)" -ForegroundColor Green
+        Write-Host "  [OK] Enabled: $($task.TaskName)" -ForegroundColor Green
     }
     catch {
-        Write-Host "  ! Failed to enable: $($task.TaskName)" -ForegroundColor Red
+        Write-Host "  [!] Failed to enable: $($task.TaskName)" -ForegroundColor Red
     }
 }
 
